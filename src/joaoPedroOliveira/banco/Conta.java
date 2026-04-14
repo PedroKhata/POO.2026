@@ -3,13 +3,13 @@ package joaoPedroOliveira.banco;
 import java.io.Serial;
 import java.io.Serializable;
 
-public class Conta implements Serializable {
+public abstract class Conta implements Serializable {
 	@Serial
     private static final long serialVersionUID = 1L;
 
 	private int numero;
-	private double saldo;
-	private String extrato = "";
+	protected double saldo;
+	protected String extrato = "";
 	private Pessoa dono;
 	
 	public Pessoa getDono() {
@@ -30,13 +30,8 @@ public class Conta implements Serializable {
 		saldo = saldo + v;
 		extrato = extrato + "Crédito: " + v + ". Saldo: " + saldo + ".\n";
 	}
-	
-	public void debito(double v) {
-		if (v <= saldo) {
-			saldo = saldo - v;
-			extrato = extrato + "Débito: " + v + ". Saldo: " + saldo + ".\n";
-		}
-	}
+
+	public abstract void debito(double v) throws SaldoInsuficiente;
 	
 	public String extrato() {
 		return extrato;

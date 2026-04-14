@@ -8,7 +8,7 @@ import java.io.ObjectOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class ArquivoDeContas {
+public class ArquivoDeContas implements RepositorioDeContas {
     private String nomeArquivo;
     // Construtor padrão
     public ArquivoDeContas() {
