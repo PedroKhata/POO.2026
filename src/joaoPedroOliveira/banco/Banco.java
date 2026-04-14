@@ -21,7 +21,7 @@ public class Banco {
         if (c != null) {
             c.debito(val);
             if (contas instanceof ArquivoDeContas) {
-                contas.atualizar(c);
+                ((ArquivoDeContas)contas).atualizar(c);
             }
         }
     }
@@ -31,7 +31,7 @@ public class Banco {
         if (c != null) {
             c.credito(val);
             if (contas instanceof ArquivoDeContas) {
-                contas.atualizar(c);
+                ((ArquivoDeContas) contas).atualizar(c);
             }
         }
     }
@@ -70,8 +70,8 @@ public class Banco {
                     origem.debito(val);
                     destino.credito(val);
                     if (contas instanceof ArquivoDeContas) {
-                        contas.atualizar(destino);
-                        contas.atualizar(origem);
+                        ((ArquivoDeContas)contas).atualizar(destino);
+                        ((ArquivoDeContas)contas).atualizar(origem);
                     }
                 }
             }
@@ -80,7 +80,7 @@ public class Banco {
     // Apenas para testes
     public void hardReset() {
         if (contas instanceof ArquivoDeContas) {
-            contas.deletarDados();
+            ((ArquivoDeContas)contas).deletarDados();
         }
     }
 }

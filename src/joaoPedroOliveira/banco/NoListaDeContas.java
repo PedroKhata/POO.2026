@@ -22,14 +22,4 @@ public class NoListaDeContas implements RepositorioDeContas {
         }
         return prox.pesquisar(n);
     }
-
-    @Override
-    public void atualizar(Conta destino) {
-
-    }
-
-    @Override
-    public void deletarDados() {
-
-    }
 }

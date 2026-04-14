@@ -17,14 +17,4 @@ public class ArrayListDeContas implements RepositorioDeContas {
         }
         return null;
     }
-
-    @Override
-    public void atualizar(Conta destino) {
-
-    }
-
-    @Override
-    public void deletarDados() {
-
-    }
 }

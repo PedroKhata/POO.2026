@@ -16,14 +16,4 @@ public class VetorDeContas implements RepositorioDeContas {
         }
         return null;
     }
-
-    @Override
-    public void atualizar(Conta destino) {
-
-    }
-
-    @Override
-    public void deletarDados() {
-
-    }
 }
