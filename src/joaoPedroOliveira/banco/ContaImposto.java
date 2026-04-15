@@ -1,7 +1,12 @@
 package joaoPedroOliveira.banco;
 
-public class ContaImposto extends Conta {
+import java.io.Serial;
+import java.io.Serializable;
+
+public class ContaImposto extends Conta implements Serializable {
     private double imposto;
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     public ContaImposto(int n, Pessoa p, double i) {
         super(n, p);

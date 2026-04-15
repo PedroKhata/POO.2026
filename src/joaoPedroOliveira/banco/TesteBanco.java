@@ -5,7 +5,7 @@ import org.junit.Test;
 
 public class TesteBanco {
 	@Test
-	public void testeCadastroContaComum() {
+	public void testeCadastroContaComum() throws ContaJaCadastrada, ContaInexistente {
 		Pessoa p1 = new Pessoa(1);
 		Conta c1 = new ContaEspecial(100, p1, 1000);
 		Pessoa p2 = new Pessoa(2);
@@ -21,7 +21,7 @@ public class TesteBanco {
 	}
 	
 	@Test
-	public void testeSaqueDeposito() throws SaldoInsuficiente {
+	public void testeSaqueDeposito() throws SaldoInsuficiente, ContaJaCadastrada, ContaInexistente {
 		Pessoa p1 = new Pessoa(1);
 		Conta c1 = new ContaComum(100, p1);
 		Banco b = new Banco();
@@ -37,7 +37,7 @@ public class TesteBanco {
 	}
 	
 	@Test
-	public void testeSaqueAcimaDoSaldoArquivo() {
+	public void testeSaqueAcimaDoSaldoArquivo() throws ContaJaCadastrada, ContaInexistente, SaldoInsuficiente {
 		Banco b = new Banco("teste_arq_contas.dat");
 		b.hardReset();
 		Pessoa p1 = new Pessoa(1);
@@ -53,7 +53,7 @@ public class TesteBanco {
 	}
 
 	@Test
-	public void testeTransferenciaArquivo() {
+	public void testeTransferenciaArquivo() throws ContaJaCadastrada, ContaInexistente, SaldoInsuficiente {
 		Banco b = new Banco("teste_arq_contas.dat");
 		b.hardReset();
 		Pessoa p1 = new Pessoa(1);

@@ -11,7 +11,7 @@ public abstract class Conta implements Serializable {
 	protected double saldo;
 	protected String extrato = "";
 	private Pessoa dono;
-	
+
 	public Pessoa getDono() {
 		return dono;
 	}

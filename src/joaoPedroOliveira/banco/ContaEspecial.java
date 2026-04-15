@@ -1,7 +1,12 @@
 package joaoPedroOliveira.banco;
 
-public class ContaEspecial extends Conta {
+import java.io.Serial;
+import java.io.Serializable;
+
+public class ContaEspecial extends Conta implements Serializable {
     private double limite;
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     public ContaEspecial(int n, Pessoa p, double l) {
         super(n, p);

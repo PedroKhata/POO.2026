@@ -8,12 +8,14 @@ import java.io.ObjectOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public abstract class ArquivoDeContas implements RepositorioDeArquivos {
+public class ArquivoDeContas implements RepositorioDeArquivos {
     private String nomeArquivo;
+
     // Construtor padrão
     public ArquivoDeContas() {
         this.nomeArquivo = "contas_dados.dat";
     }
+
     // Construtor para testes
     public ArquivoDeContas(String nomeArquivoTeste) {
         this.nomeArquivo = nomeArquivoTeste;
@@ -45,25 +47,27 @@ public abstract class ArquivoDeContas implements RepositorioDeArquivos {
         }
     }
 
-    public void cadastrar(Conta c) {
-        if (pesquisar(c.numero()) != null) {
-            return;
+    public void cadastrar(Conta c) throws ContaJaCadastrada {
+        try {
+            pesquisar(c.numero());
+            throw new ContaJaCadastrada(c.numero());
+        } catch (ContaInexistente i) {
+            ArrayList<Conta> contas = carregarContas();
+            contas.add(c);
+            salvarContas(contas);
         }
-        ArrayList<Conta> contas = carregarContas();
-        contas.add(c);
-        salvarContas(contas);
     }
 
-    public Conta pesquisar(int n) {
+    public Conta pesquisar(int n) throws ContaInexistente {
         ArrayList<Conta> contas = carregarContas();
-
+        Conta c;
         for (int i = 0; i < contas.size(); i++) {
-            Conta c = contas.get(i);
+            c = contas.get(i);
             if (c.numero() == n) {
                 return c;
             }
         }
-        return null;
+        throw new ContaInexistente(n);
     }
 
     public void atualizar(Conta c) {

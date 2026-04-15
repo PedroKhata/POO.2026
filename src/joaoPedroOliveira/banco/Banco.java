@@ -7,74 +7,86 @@ public class Banco {
     }
 
     public Banco(String arquivoDeTeste) {
-        if (contas instanceof ArquivoDeContas){
-            this.contas = new ArquivoDeContas(arquivoDeTeste);
-        }
+        this.contas = new ArquivoDeContas(arquivoDeTeste);
     }
 
-    public void cadastro(Conta c) {
+    public void cadastro(Conta c) throws ContaJaCadastrada {
         contas.cadastrar(c);
     }
 
-    public void saque(int n, double val) throws SaldoInsuficiente {
+    public void saque(int n, double val) throws SaldoInsuficiente, ContaInexistente {
         Conta c = contas.pesquisar(n);
         if (c != null) {
             c.debito(val);
             if (contas instanceof ArquivoDeContas) {
                 ((ArquivoDeContas)contas).atualizar(c);
             }
+        } else {
+            throw new ContaInexistente(n);
         }
     }
 
-    public void deposito(int n, double val) {
+    public void deposito(int n, double val) throws ContaInexistente {
         Conta c = contas.pesquisar(n);
         if (c != null) {
             c.credito(val);
             if (contas instanceof ArquivoDeContas) {
                 ((ArquivoDeContas) contas).atualizar(c);
             }
+        } else {
+            throw new ContaInexistente(n);
         }
     }
 
-    public double saldo(int n) {
+    public double saldo(int n) throws ContaInexistente {
         Conta c = contas.pesquisar(n);
         if (c != null) {
             return c.saldo();
+        } else {
+            throw new ContaInexistente(n);
         }
-        return -9999999;
     }
 
-    public void rendeJuros(int num, double t) {
+    public void rendeJuros(int num, double t) throws NaoEhPoupanca, ContaInexistente {
         Conta c = contas.pesquisar(num);
-        if (c != null && c instanceof Poupanca) {
-            ((Poupanca) c).juros(t);
+        if (c != null) {
+            if (c instanceof Poupanca) {
+                ((Poupanca) c).juros(t);
+            } else {
+                throw new NaoEhPoupanca(num);
+            }
+        } else {
+            throw new ContaInexistente(num);
         }
     }
 
-    public String extrato(int n) {
+    public String extrato(int n) throws ContaInexistente {
         Conta c = contas.pesquisar(n);
         if (c != null) {
             return c.extrato();
+        } else {
+            throw new ContaInexistente(n);
         }
-        return "";
     }
 
-    public void transfere(int de, int para, double val) throws SaldoInsuficiente {
+    public void transfere(int de, int para, double val) throws SaldoInsuficiente, ContaInexistente {
         if (de == para || val <= 0) {
-            return;
-        } else {
-            Conta origem = contas.pesquisar(de);
-            Conta destino = contas.pesquisar(para);
-            if (origem != null && destino != null) {
-                if (origem.saldo() >= val) {
-                    origem.debito(val);
-                    destino.credito(val);
-                    if (contas instanceof ArquivoDeContas) {
-                        ((ArquivoDeContas)contas).atualizar(destino);
-                        ((ArquivoDeContas)contas).atualizar(origem);
-                    }
-                }
+           return;
+        }
+
+        Conta origem = contas.pesquisar(de);
+        Conta destino = contas.pesquisar(para);
+
+        if (origem.saldo() >= val) {
+            origem.debito(val);
+            destino.credito(val);
+
+            if (contas instanceof ArquivoDeContas) {
+                ((ArquivoDeContas)contas).atualizar(destino);
+                ((ArquivoDeContas)contas).atualizar(origem);
             }
+        } else {
+            throw new SaldoInsuficiente(origem.numero(), origem.saldo());
         }
     }
     // Apenas para testes

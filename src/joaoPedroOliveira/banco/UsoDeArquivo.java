@@ -1,7 +1,7 @@
 package joaoPedroOliveira.banco;
 
 public class UsoDeArquivo {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ContaInexistente, ContaJaCadastrada {
         Banco b = new Banco();
         Pessoa p1 = new Pessoa(1);
         Conta c1 = new ContaComum(100, p1);

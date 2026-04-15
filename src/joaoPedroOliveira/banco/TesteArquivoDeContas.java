@@ -5,7 +5,7 @@ import org.junit.Test;
 
 public class TesteArquivoDeContas {
     @Test
-    public void testeArquivo() {
+    public void testeArquivo() throws ContaJaCadastrada, ContaInexistente {
         Banco b = new Banco("teste_arq_contas.dat");
         b.hardReset();
         //Obs.: hardReset limpa o .dat
@@ -27,7 +27,7 @@ public class TesteArquivoDeContas {
     }
 
     @Test
-    public void testeArquivoComTransferencia() throws SaldoInsuficiente {
+    public void testeArquivoComTransferencia() throws SaldoInsuficiente, ContaJaCadastrada, ContaInexistente {
         Banco b = new Banco("teste_arq_contas.dat");
         b.hardReset();
 

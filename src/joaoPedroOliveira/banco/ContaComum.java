@@ -1,6 +1,12 @@
 package joaoPedroOliveira.banco;
 
-public class ContaComum extends Conta {
+import java.io.Serial;
+import java.io.Serializable;
+
+public class ContaComum extends Conta implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
+
     public ContaComum(int n, Pessoa p) {
         super(n, p);
     }
