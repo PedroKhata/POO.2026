@@ -7,6 +7,7 @@ public class Banco {
     }
 
     public Banco(String arquivoDeTeste) {
+
         this.contas = new ArquivoDeContas(arquivoDeTeste);
     }
 
@@ -73,20 +74,14 @@ public class Banco {
         if (de == para || val <= 0) {
            return;
         }
-
         Conta origem = contas.pesquisar(de);
         Conta destino = contas.pesquisar(para);
+        origem.debito(val);
+        destino.credito(val);
 
-        if (origem.saldo() >= val) {
-            origem.debito(val);
-            destino.credito(val);
-
-            if (contas instanceof ArquivoDeContas) {
-                ((ArquivoDeContas)contas).atualizar(destino);
-                ((ArquivoDeContas)contas).atualizar(origem);
-            }
-        } else {
-            throw new SaldoInsuficiente(origem.numero(), origem.saldo());
+        if (contas instanceof ArquivoDeContas) {
+            ((ArquivoDeContas)contas).atualizar(destino);
+            ((ArquivoDeContas)contas).atualizar(origem);
         }
     }
     // Apenas para testes

@@ -1,6 +1,6 @@
 package joaoPedroOliveira.banco;
 
 public interface RepositorioDeArquivos extends RepositorioDeContas {
-    void atualizar(Conta c);
-    void deletarDados();
+    public void atualizar(Conta c);
+    public void deletarDados();
 }

@@ -13,7 +13,7 @@ public class ArquivoDeContas implements RepositorioDeArquivos {
 
     // Construtor padrão
     public ArquivoDeContas() {
-        this.nomeArquivo = "contas_dados.dat";
+        this.nomeArquivo = "banco_dados.dat";
     }
 
     // Construtor para testes
