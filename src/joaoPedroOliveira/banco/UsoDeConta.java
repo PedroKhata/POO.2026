@@ -2,7 +2,7 @@ package joaoPedroOliveira.banco;
 
 public class UsoDeConta {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SaldoInsuficiente {
         Pessoa p1 = new Pessoa(100);
         p1.setNome("Pedro");
         Pessoa p2 = new Pessoa(200);

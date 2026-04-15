@@ -6,7 +6,7 @@ import static org.junit.Assert.assertEquals;
 
 public class TesteConta {
     @Test
-    public void testarCredito() {
+    public void testarCredito() throws SaldoInsuficiente {
         Pessoa p = new Pessoa(1);
         Conta c1 = new ContaComum(1, p);
         c1.credito(100);
