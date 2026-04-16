@@ -44,7 +44,7 @@ public class Produto {
         }
     }
 
-    public int getCod() {
+    public int getCodigo() {
         return cod;
     }
 
@@ -52,7 +52,7 @@ public class Produto {
         this.cod = cod;
     }
 
-    public String getDesc() {
+    public String getDescricao() {
         return desc;
     }
 
