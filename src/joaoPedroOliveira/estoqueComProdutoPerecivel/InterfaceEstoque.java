@@ -1,7 +1,5 @@
 package joaoPedroOliveira.estoqueComProdutoPerecivel;
 
-import joaoPedroOliveira.estoque.Fornecedor;
-import joaoPedroOliveira.estoque.Produto;
 import java.util.ArrayList;
 import java.util.Date;
 

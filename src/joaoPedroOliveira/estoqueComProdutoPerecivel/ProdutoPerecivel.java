@@ -1,7 +1,5 @@
 package joaoPedroOliveira.estoqueComProdutoPerecivel;
 
-import joaoPedroOliveira.estoque.Produto;
-
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -19,11 +17,9 @@ public class ProdutoPerecivel extends Produto {
 
     public int verificarQuantVencidos(Date atual) {
         int total = 0;
-        long tAtual = atual.getTime();
-        for (int i = 0; i < lotes.size(); i++) {
-            long tLote = lotes.get(i).getDataDeValidade().getTime();
-            if (tAtual > tLote) {
-                total += lotes.get(i).getQuantidade();
+        for (Lote l : lotes) {
+            if (l.verificarVencimento(atual)) {
+                total += l.getQuantidade();
             }
         }
         return total;
@@ -31,11 +27,9 @@ public class ProdutoPerecivel extends Produto {
 
     public int verificarQuantValidos(Date atual) {
         int total = 0;
-        long tAtual = atual.getTime();
-        for (int i = 0; i < lotes.size(); i++) {
-            long tLote = lotes.get(i).getDataDeValidade().getTime();
-            if (tAtual <= tLote) {
-                total += lotes.get(i).getQuantidade();
+        for (Lote l : lotes) {
+            if (!l.verificarVencimento(atual)) {
+                total += l.getQuantidade();
             }
         }
         return total;
@@ -70,29 +64,19 @@ public class ProdutoPerecivel extends Produto {
 
     public double venda(int quant, Date dataAtual) {
         int aux = quant;
-        int q;
         if (quant <= 0 || verificarQuantValidos(dataAtual) < quant) {
             return -1;
         } else {
             organizarLotes();
-            for (int i = 0; i < lotes.size(); i++) {
-                long tAtual = dataAtual.getTime();
-                long tVenc = lotes.get(i).getDataDeValidade().getTime();
-                if (tAtual <= tVenc) {
-                    if (quant <= lotes.get(i).getQuantidade()) {
-                        q = lotes.get(i).getQuantidade() - quant;
-                        lotes.get(i).setQuantidade(q);
-                        quant = 0;
-                    } else {
-                        quant -= lotes.get(i).getQuantidade();
-                        lotes.get(i).setQuantidade(0);
-                    }
+            for (Lote l : lotes) {
+                if (!l.verificarVencimento(dataAtual)) {
+                    quant = l.descontarQuantidade(quant);
                 }
                 if (quant == 0) break;
             }
         }
         limpeza();
-        return aux * getPrecoDeVenda();
+        return super.venda(aux);
     }
 
     public ArrayList<Lote> getLotes() {

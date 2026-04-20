@@ -12,17 +12,20 @@ public class Lote {
     }
 
     public boolean verificarVencimento(Date dataAtual) {
-        long atual = dataAtual.getTime();
-        long venc = getDataDeValidade().getTime();
+        long tAtual = dataAtual.getTime();
+        long tVenc = getDataDeValidade().getTime();
 
-        return atual > venc;
+        return tAtual >= tVenc;
     }
 
-    public void descontarQuantidade(int quant) {
-        if (quant > getQuantidade() || quant <= 0) {
-            return;
+    public int descontarQuantidade(int quant) {
+        if (quant <= getQuantidade()) {
+            setQuantidade(getQuantidade() - quant);
+            return 0;
         } else {
-            setQuantidade(quantidade - quant);
+            int aux = getQuantidade();
+            setQuantidade(0);
+            return (quant - aux);
         }
     }
 

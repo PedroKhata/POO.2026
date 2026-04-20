@@ -1,7 +1,5 @@
 package joaoPedroOliveira.estoque;
 
-import joaoPedroOliveira.estoqueComProdutoPerecivel.InterfaceEstoque;
-
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -12,9 +10,9 @@ public class Estoque {
 
     }
 
-    public Produto buscarProduto(int cod) {
+    public Produto pesquisar(int cod) {
         for (int i = 0; i < produtos.size(); i++) {
-            if (produtos.get(i).getCod() == cod) {
+            if (produtos.get(i).getCodigo() == cod) {
                 return produtos.get(i);
             }
         }
@@ -22,13 +20,13 @@ public class Estoque {
     }
 
     public void incluir(Produto p) {
-        if (buscarProduto(p.getCod()) == null) {
+        if (pesquisar(p.getCodigo()) == null) {
             produtos.add(p);
         }
     }
 
     public int quantidade(int cod) {
-        Produto p = buscarProduto(cod);
+        Produto p = pesquisar(cod);
         if (p != null) {
             return p.getQuantidade();
         }
@@ -36,7 +34,7 @@ public class Estoque {
     }
 
     public void comprar(int cod, int quant, double preco) {
-        Produto p = buscarProduto(cod);
+        Produto p = pesquisar(cod);
         if (p != null) {
             p.compra(quant, preco);
         }
@@ -44,7 +42,7 @@ public class Estoque {
 
     public double vender(int cod, int quant) {
         double flag = -1;
-        Produto p = buscarProduto(cod);
+        Produto p = pesquisar(cod);
         if (p != null) {
             flag = p.venda(quant);
         }
@@ -52,7 +50,7 @@ public class Estoque {
     }
 
     public double precoDeVenda(int cod) {
-        Produto p = buscarProduto(cod);
+        Produto p = pesquisar(cod);
         if (p != null) {
             return p.getPrecoDeVenda();
         }
@@ -60,7 +58,7 @@ public class Estoque {
     }
 
     public double precoDeCompra(int cod) {
-        Produto p = buscarProduto(cod);
+        Produto p = pesquisar(cod);
         if (p != null) {
             return p.getPrecoDeCompra();
         }
@@ -68,7 +66,7 @@ public class Estoque {
     }
 
     public ArrayList<Fornecedor> fornecedores(int cod) {
-        Produto p = buscarProduto(cod);
+        Produto p = pesquisar(cod);
         if (p != null) {
             return p.getFornecedores();
         }
@@ -86,7 +84,7 @@ public class Estoque {
     }
 
     public String movimentacao(int cod, Date inicio, Date fim) {
-        Produto p = buscarProduto(cod);
+        Produto p = pesquisar(cod);
         String s = "";
         if (p != null) {
             ArrayList<Registro> r = p.getRegistros();
@@ -100,7 +98,7 @@ public class Estoque {
     }
 
     public void adicionarFornecedor(int cod, Fornecedor f) {
-        Produto p = buscarProduto(cod);
+        Produto p = pesquisar(cod);
         if (p != null) {
             p.getFornecedores().add(f);
         }
