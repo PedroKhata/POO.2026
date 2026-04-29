@@ -8,11 +8,7 @@ public class Estoque implements InterfaceEstoqueComExcecoes {
 
     @Override
     public int quantidade(int cod) throws ProdutoInexistente {
-        Produto p = pesquisar(cod);
-        if (p == null) {
-            throw new ProdutoInexistente(cod);
-        }
-        return p.getQuantidade();
+        return pesquisar(cod).getQuantidade();
     }
 
     @Override
@@ -70,8 +66,8 @@ public class Estoque implements InterfaceEstoqueComExcecoes {
     @Override
     public double vender(int cod, int quant) throws ProdutoInexistente, ProdutoVencido, DadosInvalidos {
         Produto p = pesquisar(cod);
-        if (p == null) {
-            return -1;
+        if (quant > p.getQuantidade()) {
+            throw new DadosInvalidos("");
         }
         if (p instanceof ProdutoPerecivel) {
             return ((ProdutoPerecivel) p).venda(quant, new Date());
@@ -107,54 +103,40 @@ public class Estoque implements InterfaceEstoqueComExcecoes {
     }
 
     @Override
-    public int quantidadeVencidos(int cod) {
+    public int quantidadeVencidos(int cod) throws ProdutoInexistente {
         Produto p = pesquisar(cod);
-        if (p == null) {
-            return 0;
-        }
-
         if (p instanceof ProdutoPerecivel) {
             return ((ProdutoPerecivel) p).verificarQuantVencidos(new Date());
         }
-
         return 0;
     }
 
-    @Override
-    public void adicionarFornecedor(int cod, Fornecedor f) {
+    public void adicionarFornecedor(int cod, Fornecedor f) throws ProdutoInexistente {
         Produto p = pesquisar(cod);
         if (p != null && f != null) {
             p.getFornecedores().add(f);
         }
     }
 
-    @Override
-    public double precoDeVenda(int cod) {
+    public double precoDeVenda(int cod) throws ProdutoInexistente {
         Produto p = pesquisar(cod);
-        if (p != null) {
-            return p.getPrecoDeVenda();
-        }
-        return 0;
+        return p.getPrecoDeVenda();
+
     }
 
-    @Override
-    public double precoDeCompra(int cod) {
+    public double precoDeCompra(int cod) throws ProdutoInexistente {
         Produto p = pesquisar(cod);
-        if (p != null) {
-            return p.getPrecoDeCompra();
-        }
-        return 0;
+        return p.getPrecoDeCompra();
     }
 
-    public String movimentacao(int cod, Date inicio, Date fim) {
+    public String movimentacao(int cod, Date inicio, Date fim) throws ProdutoInexistente {
         Produto p = pesquisar(cod);
         String s = "";
-        if (p != null) {
-            ArrayList<Registro> r = p.getRegistros();
-            for (int i = 0; i < r.size(); i++) {
-                if (inicio.getTime() <= r.get(i).getData().getTime() && r.get(i).getData().getTime() < fim.getTime()) {
-                    s = s + r.get(i).formatarTexto();
-                }
+
+        ArrayList<Registro> r = p.getRegistros();
+        for (int i = 0; i < r.size(); i++) {
+            if (inicio.getTime() <= r.get(i).getData().getTime() && r.get(i).getData().getTime() < fim.getTime()) {
+                s = s + r.get(i).formatarTexto();
             }
         }
         return s;

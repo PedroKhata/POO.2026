@@ -33,14 +33,14 @@ public class Produto {
         }
     }
 
-    public double venda(int quant) {
+    public double venda(int quant) throws DadosInvalidos {
         if (quantidade > 0 && quant <= quantidade && quant > 0) {
             quantidade -= quant;
             Registro r = new Registro(new Date(), "Venda", quant, precoDeVenda);
             registros.add(r);
             return quant * precoDeVenda;
         } else  {
-            return -1;
+            throw new DadosInvalidos("");
         }
     }
 

@@ -11,8 +11,5 @@ public interface InterfaceEstoqueComExcecoes {
     public ArrayList<Produto> estoqueAbaixoDoMinimo();
     public ArrayList<Produto> estoqueVencido();
     public int quantidadeVencidos(int cod) throws ProdutoInexistente;
-    public void adicionarFornecedor(int cod, Fornecedor f);
-    public double precoDeVenda(int cod);
-    public double precoDeCompra(int cod);
     public int quantidade(int cod) throws ProdutoInexistente;
 }
